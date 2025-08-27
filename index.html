@@ -83,21 +83,24 @@
 
 
 /* 📱 Ajuste en móvil */
+/* 📱 Responsive: en celulares */
 @media (max-width: 768px) {
   .navbar-container {
-    flex-direction: row; /* mantiene título izq y botones der */
+    flex-direction: column; /* apilar contenido */
+    align-items: center;
   }
 
   .nav-links {
-    gap: 8px; /* menos separación en móvil */
+    margin-top: 10px;
+    flex-direction: column; /* botones uno debajo del otro */
+    align-items: center;
+    gap: 10px;
   }
 
-  .nav-btn {
-    font-size: 0.85rem; /* más pequeños en móvil */
-    padding: 4px 6px;
+  .brand {
+    margin-bottom: 10px;
   }
 }
-
 
     /* CARRUSEL */
     .hero{
@@ -331,7 +334,7 @@
 
     <!-- Logo + Título -->
     <a href="index.html" class="brand">
-      <img src="coyote.jpg" alt="Logo Orfebrería" class="brand-logo">
+      <img src="5454.jpg" alt="Logo Orfebrería" class="brand-logo">
       <span class="navbar-brand">Orfebrería</span>
     </a>
 
@@ -603,3 +606,4 @@
   </script>
 </body>
 </html>
+
