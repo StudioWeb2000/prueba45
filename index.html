@@ -36,7 +36,7 @@
 
 .navbar-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* título izq, botones der */
   align-items: center;
   max-width: 1200px;
   margin: auto;
@@ -50,7 +50,7 @@
 
 .nav-links {
   display: flex;
-  gap: 15px;
+  gap: 15px; /* separación entre botones */
 }
 
 .nav-btn {
@@ -69,16 +69,17 @@
 /* 📱 Responsivo en móvil */
 @media (max-width: 768px) {
   .navbar-container {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row; /* 👈 mantiene título izq y botones der */
+    justify-content: space-between;
   }
+
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    flex-wrap: nowrap; /* 👈 evita que bajen */
+    gap: 8px; /* menos espacio */
   }
+
   .nav-btn {
-    font-size: 0.9rem; /* más pequeño en celular */
+    font-size: 0.85rem; /* más pequeño en celular */
   }
 }
 
@@ -583,5 +584,3 @@
   </script>
 </body>
 </html>
-
-
