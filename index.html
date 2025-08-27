@@ -28,40 +28,34 @@
     img{display:block;max-width:100%;height:auto}
 
     /* NAVBAR */
-  .navbar {
-  width: 100%;
-  background: #000; /* negro */
+
+    /* NAVBAR GENERAL */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
   padding: 10px 20px;
 }
 
-.navbar-container {
-  display: flex;
-  justify-content: space-between; /* Título izq, botones der */
-  align-items: center;
-  max-width: 1200px;
-  margin: auto;
-}
-
 .navbar-brand {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #e5e4e2; /* platino */
 }
 
 .nav-links {
   display: flex;
-  flex-direction: row; /* 👈 Siempre horizontal */
-  flex-wrap: nowrap;   /* 👈 Nunca se bajan */
-  gap: 15px;           /* espacio entre botones */
+  flex-direction: row;
+  gap: 15px;
 }
 
 .nav-btn {
   background: none;
   border: none;
   font-size: 1rem;
-  color: #e5e4e2; /* platino */
+  color: #e5e4e2;
   cursor: pointer;
-  white-space: nowrap; /* 👈 Evita que se rompa el texto */
   transition: color 0.3s;
 }
 
@@ -69,21 +63,25 @@
   color: #fff;
 }
 
-/* 📱 Ajuste en móvil */
+/* 📱 AJUSTE EN CELULAR */
 @media (max-width: 768px) {
   .navbar-container {
-    flex-direction: row; /* mantiene título izq y botones der */
+    flex-direction: column;   /* título arriba */
+    align-items: center;      /* centrado */
   }
 
   .nav-links {
-    gap: 8px; /* menos separación en móvil */
+    margin-top: 10px;
+    justify-content: center;  /* botones al medio */
+    flex-wrap: wrap;          /* si no entran, saltan a otra fila */
   }
 
   .nav-btn {
-    font-size: 0.85rem; /* más pequeños en móvil */
-    padding: 4px 6px;
+    font-size: 0.9rem;
+    padding: 6px 10px;
   }
 }
+
 
 
     /* CARRUSEL */
@@ -369,7 +367,7 @@
     <div class="product-row">
       <div class="grid">
         <!-- 5 productos (ejemplo) -->
-        <article class="product" data-name="Anillo Aura" data-price="S/ 420" data-desc="Oro 18k con circonia de corte brillante." data-img="img/anillos/a1.jpg">
+        <article class="product" data-name="Anillo Aura" data-price="S/ 420" data-desc="Oro 18k te." data-img="img/anillos/a1.jpg">
           <img src="img/anillos/a1.jpg" alt="Anillo Aura en oro 18k">
           <div class="p-name">Anillo Aura</div>
           <div class="p-price">S/ 420</div>
@@ -586,4 +584,5 @@
   </script>
 </body>
 </html>
+
 
