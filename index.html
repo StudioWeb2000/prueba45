@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orfebrería  Joyería Fina</title>
+  <title>Orfebrería Aurora — Joyería Fina</title>
 
   <!-- Tipografías elegantes -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -105,12 +105,22 @@
     .section{
       max-width:1200px; margin:34px auto 0; padding:0 18px;
     }
-    .section-header{
-      display:flex; align-items:end; justify-content:space-between; margin-bottom:12px;
-    }
-    .section-title{
-      font-family:"Playfair Display",serif; font-weight:700; letter-spacing:.5px; font-size:28px;
-    }
+  .section-header {
+  display: flex;
+  flex-direction: column;   /* uno debajo del otro */
+  align-items: center;      /* centra en horizontal */
+  justify-content: center;  /* centra en vertical */
+  text-align: center;       /* centra el texto */
+  gap: 6px;                 /* pequeña separación entre título y subtítulo */
+  margin-bottom: 20px;      /* espacio con la grilla de productos */
+}
+
+.section-title, 
+.section-sub {
+  text-align: center;
+  width: 100%;
+}
+
     .section-sub{ color:var(--muted); font-size:14px }
     .product-row{
       background:var(--surface); border:1px solid rgba(255,255,255,.06);
@@ -193,21 +203,83 @@
     }
 
     /* RESPONSIVE */
-    @media (max-width: 1100px){
-      .grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
-    }
-    @media (max-width: 860px){
-      .nav-links{ display:none } /* compacto en móvil, puedes añadir menú hamburguesa si quieres */
-      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .modal-card{ grid-template-columns: 1fr } /* en móvil, imagen arriba y texto abajo */
-      .modal-media img{ max-height:46vh }
-      .slide{ height: 62vw; max-height: 440px }
-    }
-    @media (max-width: 480px){
-      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px }
-      .section-title{ font-size:22px }
-      .slide{ height: 68vw; max-height: 380px }
-    }
+  /* ---------- Mostrar y centrar los botones en móviles ---------- */
+/* Reemplaza/añade esta sección en tu CSS (sustituye la regla @media anterior) */
+@media (max-width: 860px){
+  /* Nav: logo arriba, botones debajo y centrados */
+  .nav-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  /* Mostrar los links en columna y centrarlos */
+  .nav-links {
+    display: flex !important;        /* fuerza visible si había display:none */
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    padding: 0;
+  }
+
+  /* Botones del nav en bloque para que se toquen mejor en móvil */
+  .nav-btn {
+    width: auto;
+    padding: 10px 18px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  /* Mantener el nombre de marca centrado */
+  .brand, .brand-name {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Ajustes de layout móvil para secciones y modal */
+  .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .modal-card { grid-template-columns: 1fr; }
+  .modal-media img { max-height:46vh; }
+
+  /* Asegura que los encabezados de sección queden centrados en móvil */
+  .section-header { 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+  }
+}
+
+/* ---------- Centrar textos de producto (si aún no lo tienes) ---------- */
+.product{
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* centra horizontalmente la foto y texto */
+  justify-content: flex-start;
+  text-align: center;     /* centra nombres y precios */
+}
+
+/* Asegurar que nombre y precio se muestren centrados */
+.p-name, .p-price {
+  width: 100%;
+  text-align: center;
+}
+
+/* Centrar texto dentro del modal en móvil, mantener a la izquierda en escritorio */
+.modal-info { text-align: left; }
+@media (max-width: 860px){
+  .modal-info { text-align: center; }
+}
+
+/* (Opcional) Centrar overlay del carrusel */
+.slide .overlay { text-align: center; left: 50%; transform: translateX(-50%); width: auto; max-width: calc(100% - 40px); }
+
   </style>
 </head>
 <body>
@@ -220,7 +292,7 @@
         <span class="brand-name">Orfebrería Aurora</span>
       </a>
       <div class="nav-links">
-        <button class="nav-btn" onclick="document.querySelector('#colecciones').scrollIntoView({behavior:'smooth'})">colecciones clasicas </button>
+        <button class="nav-btn" onclick="document.querySelector('#colecciones').scrollIntoView({behavior:'smooth'})">Colecciones</button>
         <button class="nav-btn" onclick="document.querySelector('#novedades').scrollIntoView({behavior:'smooth'})">Novedades</button>
         <button class="nav-btn" onclick="document.querySelector('#ofertas').scrollIntoView({behavior:'smooth'})">Ofertas</button>
         <button class="nav-btn" onclick="document.querySelector('#contacto').scrollIntoView({behavior:'smooth'})">Contacto</button>
