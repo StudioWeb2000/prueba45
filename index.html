@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orfebrería Aurora — Joyería Fina</title>
+
+  <!-- Tipografías elegantes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0c0c0c;
+      --surface:#131313;
+      --surface-2:#181818;
+      --text:#f5f5f5;
+      --muted:#bdbdbd;
+      --gold:#d4af37;
+      --gold-2:#b6902f;
+      --ring:rgba(212,175,55,0.25);
+      --radius:18px;
+      --gap:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    img{display:block;max-width:100%;height:auto}
+
+    /* NAVBAR */
+    .navbar{
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(180deg,#0e0e0e,rgba(14,14,14,.9));
+      border-bottom:1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(6px);
+    }
+    .nav-inner{
+      max-width:1200px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; gap:16px; justify-content:space-between;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text);
+    }
+    .brand-logo{
+      width:36px; height:36px; border-radius:50%;
+      background: radial-gradient(120px 120px at 30% 30%, var(--gold), var(--gold-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.12), 0 6px 16px rgba(212,175,55,.25);
+    }
+    .brand-name{font-family:"Playfair Display",serif; font-weight:700; letter-spacing:.5px; font-size:20px}
+    .nav-links{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .nav-btn{
+      appearance:none; border:1px solid rgba(255,255,255,.1);
+      background:linear-gradient(180deg,#1a1a1a,#121212);
+      color:var(--text); padding:9px 14px; border-radius:999px;
+      font-size:14px; font-weight:500; cursor:pointer;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .2s ease;
+    }
+    .nav-btn:hover{ border-color:var(--ring); box-shadow:0 0 0 6px var(--ring) }
+    .nav-btn:active{ transform:scale(.98) }
+
+    /* CARRUSEL */
+    .hero{
+      max-width:1200px; margin:26px auto 0; padding:0 18px; /* margen arriba para no pegarse al navbar */
+    }
+    .carousel{
+      position:relative; overflow:hidden; border-radius:var(--radius);
+      background:linear-gradient(180deg,#141414,#0f0f0f);
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .carousel-track{
+      display:flex; transition: transform .45s ease-in-out;
+    }
+    .slide{
+      min-width:100%; height:52vw; max-height:560px; position:relative;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .slide img{ width:100%; height:100%; object-fit:cover }
+    .slide .overlay{
+      position:absolute; inset:auto 16px 16px 16px; padding:14px 16px;
+      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.45));
+      border:1px solid rgba(255,255,255,.08); border-radius:12px;
+      backdrop-filter: blur(4px);
+      font-family:"Playfair Display",serif; letter-spacing:.3px;
+    }
+    .ctrl{
+      position:absolute; inset:0; pointer-events:none;
+    }
+    .ctrl button{
+      pointer-events:auto; position:absolute; top:50%; transform:translateY(-50%);
+      border:none; width:42px; height:42px; border-radius:50%;
+      display:grid; place-items:center; cursor:pointer;
+      background:rgba(0,0,0,.5); color:#fff; font-size:18px;
+      box-shadow:0 6px 16px rgba(0,0,0,.4);
+    }
+    .ctrl .prev{ left:12px }
+    .ctrl .next{ right:12px }
+    .dots{ position:absolute; left:0; right:0; bottom:10px; display:flex; gap:8px; justify-content:center }
+    .dot{ width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,.35); border:1px solid rgba(255,255,255,.3) }
+    .dot.active{ background:var(--gold); border-color:var(--gold-2) }
+
+    /* SECCIONES / CATEGORÍAS */
+    .section{
+      max-width:1200px; margin:34px auto 0; padding:0 18px;
+    }
+    .section-header{
+      display:flex; align-items:end; justify-content:space-between; margin-bottom:12px;
+    }
+    .section-title{
+      font-family:"Playfair Display",serif; font-weight:700; letter-spacing:.5px; font-size:28px;
+    }
+    .section-sub{ color:var(--muted); font-size:14px }
+    .product-row{
+      background:var(--surface); border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius); padding:16px; box-shadow: var(--shadow);
+    }
+    .grid{
+      display:grid; gap:var(--gap);
+      grid-template-columns:repeat(5, minmax(0,1fr));
+    }
+    .product{
+      background:var(--surface-2); border:1px solid rgba(255,255,255,.08);
+      border-radius:16px; padding:12px; text-align:center;
+      transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+      cursor:pointer;
+    }
+    .product:hover{ transform: translateY(-4px); border-color:var(--ring); box-shadow:0 0 0 6px var(--ring) }
+    .product img{
+      width:100%; aspect-ratio: 1 / 1; object-fit:cover; border-radius:12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .p-name{ margin:10px 0 4px; font-weight:600 }
+    .p-price{ color:var(--gold); font-weight:600 }
+
+    /* MODAL (Vista rápida) */
+    .modal{
+      position:fixed; inset:0; background:rgba(0,0,0,.6);
+      display:none; align-items:center; justify-content:center; padding:18px; z-index:60;
+    }
+    .modal.open{ display:flex }
+    .modal-card{
+      width:min(980px, 100%); background:linear-gradient(180deg,#151515,#0e0e0e);
+      border:1px solid rgba(255,255,255,.08); border-radius:18px; overflow:hidden;
+      box-shadow:0 30px 70px rgba(0,0,0,.6);
+      display:grid; grid-template-columns: 1.2fr 1fr;
+    }
+    .modal-media{
+      background:#000; display:flex; align-items:center; justify-content:center;
+      border-right:1px solid rgba(255,255,255,.06);
+    }
+    .modal-media img{
+      width:100%; height:100%; object-fit:contain; max-height:72vh;
+    }
+    .modal-info{ padding:22px }
+    .modal-title{ font-family:"Playfair Display",serif; font-size:26px; margin:0 0 10px }
+    .modal-price{ color:var(--gold); font-size:20px; font-weight:700; margin-bottom:10px }
+    .modal-desc{ color:var(--muted); line-height:1.6; margin-bottom:18px }
+    .modal-actions{ display:flex; gap:10px; flex-wrap:wrap }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg,#1a1a1a,#111); color:var(--text);
+      padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+      transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease;
+    }
+    .btn:hover{ border-color:var(--ring); box-shadow:0 0 0 6px var(--ring) }
+    .btn.gold{ background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; border-color:rgba(0,0,0,.3) }
+    .close-x{
+      position:absolute; right:20px; top:16px; width:36px; height:36px; border-radius:50%;
+      display:grid; place-items:center; font-size:20px; color:#fff; background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.1);
+      cursor:pointer;
+    }
+    .close-x:hover{ background:rgba(0,0,0,.65) }
+
+    /* CONTACTO */
+    .contact{
+      max-width:1200px; margin:40px auto 60px; padding:0 18px;
+      display:grid; gap:var(--gap); grid-template-columns:1.2fr 1fr;
+    }
+    .card{
+      background:var(--surface); border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);
+    }
+    .card h3{ font-family:"Playfair Display",serif; margin:0 0 10px }
+    .muted{ color:var(--muted) }
+
+    /* FOOTER */
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:18px; text-align:center; color:var(--muted);
+      background:#0e0e0e;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px){
+      .grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+    @media (max-width: 860px){
+      .nav-links{ display:none } /* compacto en móvil, puedes añadir menú hamburguesa si quieres */
+      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .modal-card{ grid-template-columns: 1fr } /* en móvil, imagen arriba y texto abajo */
+      .modal-media img{ max-height:46vh }
+      .slide{ height: 62vw; max-height: 440px }
+    }
+    @media (max-width: 480px){
+      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px }
+      .section-title{ font-size:22px }
+      .slide{ height: 68vw; max-height: 380px }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="#inicio" aria-label="Inicio">
+        <span class="brand-logo" aria-hidden="true"></span>
+        <span class="brand-name">Orfebrería Aurora</span>
+      </a>
+      <div class="nav-links">
+        <button class="nav-btn" onclick="document.querySelector('#colecciones').scrollIntoView({behavior:'smooth'})">Colecciones</button>
+        <button class="nav-btn" onclick="document.querySelector('#novedades').scrollIntoView({behavior:'smooth'})">Novedades</button>
+        <button class="nav-btn" onclick="document.querySelector('#ofertas').scrollIntoView({behavior:'smooth'})">Ofertas</button>
+        <button class="nav-btn" onclick="document.querySelector('#contacto').scrollIntoView({behavior:'smooth'})">Contacto</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / CARRUSEL -->
+  <header id="inicio" class="hero">
+    <div class="carousel" aria-label="Destacados">
+      <div class="carousel-track" id="track">
+        <!-- Slide 1 -->
+        <div class="slide">
+          <img src="img/hero1.jpg" alt="Collar de oro con diamantes — colección Lumière">
+          <div class="overlay">Colección Lumière — Brillo eterno</div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+          <img src="img/hero2.jpg" alt="Anillos apilables en oro rosa">
+          <div class="overlay">Anillos apilables — Oro rosa</div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+          <img src="img/hero3.jpg" alt="Pulseras minimalistas en plata esterlina">
+          <div class="overlay">Minimal Silver — Pulseras en plata</div>
+        </div>
+      </div>
+
+      <div class="ctrl">
+        <button class="prev" aria-label="Anterior" onclick="moveSlide(-1)">❮</button>
+        <button class="next" aria-label="Siguiente" onclick="moveSlide(1)">❯</button>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIONES / CATEGORÍAS -->
+  <section id="colecciones" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Anillos</h2>
+      <span class="section-sub">Descubre piezas únicas para cada ocasión</span>
+    </div>
+    <div class="product-row">
+      <div class="grid">
+        <!-- 5 productos (ejemplo) -->
+        <article class="product" data-name="Anillo Aura" data-price="S/ 420" data-desc="Oro 18k con circonia de corte brillante." data-img="img/anillos/a1.jpg">
+          <img src="img/anillos/a1.jpg" alt="Anillo Aura en oro 18k">
+          <div class="p-name">Anillo Aura</div>
+          <div class="p-price">S/ 420</div>
+        </article>
+        <article class="product" data-name="Anillo Solstice" data-price="S/ 590" data-desc="Oro rosa 18k con detalle minimal." data-img="img/anillos/a2.jpg">
+          <img src="img/anillos/a2.jpg" alt="Anillo Solstice en oro rosa">
+          <div class="p-name">Solstice</div>
+          <div class="p-price">S/ 590</div>
+        </article>
+        <article class="product" data-name="Anillo Eterna" data-price="S/ 680" data-desc="Aro fino con incrustaciones sutiles." data-img="img/anillos/a3.jpg">
+          <img src="img/anillos/a3.jpg" alt="Anillo Eterna con incrustaciones">
+          <div class="p-name">Eterna</div>
+          <div class="p-price">S/ 680</div>
+        </article>
+        <article class="product" data-name="Anillo Nova" data-price="S/ 520" data-desc="Diseño geométrico en oro amarillo." data-img="img/anillos/a4.jpg">
+          <img src="img/anillos/a4.jpg" alt="Anillo Nova geométrico">
+          <div class="p-name">Nova</div>
+          <div class="p-price">S/ 520</div>
+        </article>
+        <article class="product" data-name="Anillo Brio" data-price="S/ 390" data-desc="Acabado pulido con brillo intenso." data-img="img/anillos/a5.jpg">
+          <img src="img/anillos/a5.jpg" alt="Anillo Brio acabado pulido">
+          <div class="p-name">Brio</div>
+          <div class="p-price">S/ 390</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="novedades" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Collares</h2>
+      <span class="section-sub">Elegancia que ilumina tu estilo</span>
+    </div>
+    <div class="product-row">
+      <div class="grid">
+        <article class="product" data-name="Collar Lumière" data-price="S/ 980" data-desc="Diamante central sobre oro 18k." data-img="img/collares/c1.jpg">
+          <img src="img/collares/c1.jpg" alt="Collar Lumière con diamante">
+          <div class="p-name">Lumière</div>
+          <div class="p-price">S/ 980</div>
+        </article>
+        <article class="product" data-name="Collar Halo" data-price="S/ 720" data-desc="Aro brillante con cadena ajustable." data-img="img/collares/c2.jpg">
+          <img src="img/collares/c2.jpg" alt="Collar Halo aro brillante">
+          <div class="p-name">Halo</div>
+          <div class="p-price">S/ 720</div>
+        </article>
+        <article class="product" data-name="Collar Estela" data-price="S/ 640" data-desc="Colgante de estrella en oro rosa." data-img="img/collares/c3.jpg">
+          <img src="img/collares/c3.jpg" alt="Collar Estela oro rosa">
+          <div class="p-name">Estela</div>
+          <div class="p-price">S/ 640</div>
+        </article>
+        <article class="product" data-name="Collar Prisma" data-price="S/ 560" data-desc="Diseño facetado con brillo suave." data-img="img/collares/c4.jpg">
+          <img src="img/collares/c4.jpg" alt="Collar Prisma diseño facetado">
+          <div class="p-name">Prisma</div>
+          <div class="p-price">S/ 560</div>
+        </article>
+        <article class="product" data-name="Collar Alba" data-price="S/ 610" data-desc="Plata esterlina con baño de oro." data-img="img/collares/c5.jpg">
+          <img src="img/collares/c5.jpg" alt="Collar Alba plata con baño de oro">
+          <div class="p-name">Alba</div>
+          <div class="p-price">S/ 610</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="ofertas" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Pulseras</h2>
+      <span class="section-sub">Diseños minimalistas con carácter</span>
+    </div>
+    <div class="product-row">
+      <div class="grid">
+        <article class="product" data-name="Pulsera Lazo" data-price="S/ 350" data-desc="Lazo delicado con cierre seguro." data-img="6m.jpg">
+          <img src="6m.jpg" alt="Pulsera Lazo">
+          <div class="p-name">Lazo</div>
+          <div class="p-price">S/ 350</div>
+        </article>
+        <article class="product" data-name="Pulsera Trenza" data-price="S/ 420" data-desc="Cadena trenzada de alta resistencia." data-img="12.png">
+          <img src="12.png" alt="Pulsera Trenza">
+          <div class="p-name">Trenza</div>
+          <div class="p-price">S/ 420</div>
+        </article>
+        <article class="product" data-name="Pulsera Origen" data-price="S/ 380" data-desc="Acabado mate con toque urbano." data-img="img/pulseras/p3.jpg">
+          <img src="img/pulseras/p3.jpg" alt="Pulsera Origen">
+          <div class="p-name">Origen</div>
+          <div class="p-price">S/ 380</div>
+        </article>
+        <article class="product" data-name="Pulsera Cúbica" data-price="S/ 450" data-desc="Eslabones cúbicos con brillo." data-img="img/pulseras/p4.jpg">
+          <img src="img/pulseras/p4.jpg" alt="Pulsera Cúbica">
+          <div class="p-name">Cúbica</div>
+          <div class="p-price">S/ 450</div>
+        </article>
+        <article class="product" data-name="Pulsera Línea" data-price="S/ 320" data-desc="Diseño lineal, sobrio y versátil." data-img="img/pulseras/p5.jpg">
+          <img src="img/pulseras/p5.jpg" alt="Pulsera Línea">
+          <div class="p-name">Línea</div>
+          <div class="p-price">S/ 320</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="contact">
+    <div class="card">
+      <h3>Visítanos</h3>
+      <p class="muted">Av. Larco 123, Miraflores — Lima</p>
+      <p class="muted">Lun a Sáb: 10:00–20:00 · Dom: 11:00–18:00</p>
+      <p class="muted">WhatsApp: +51 999 999 999 · contacto@aurorajoyas.pe</p>
+    </div>
+    <div class="card">
+      <h3>Escríbenos</h3>
+      <form onsubmit="event.preventDefault(); alert('¡Gracias! Te responderemos a la brevedad.');">
+        <div style="display:grid; gap:10px">
+          <input type="text" name="nombre" placeholder="Tu nombre" required
+                 style="padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:var(--text)">
+          <input type="email" name="email" placeholder="Tu email" required
+                 style="padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:var(--text)">
+          <textarea name="mensaje" rows="4" placeholder="Mensaje"
+                 style="padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:var(--text)"></textarea>
+          <button class="btn gold" type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Orfebrería Aurora · Lima — Todos los derechos reservados
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Vista rápida del producto">
+    <div class="modal-card" role="document">
+      <button class="close-x" aria-label="Cerrar" onclick="closeModal()">✕</button>
+      <div class="modal-media">
+        <img id="m-img" src="" alt="">
+      </div>
+      <div class="modal-info">
+        <h3 class="modal-title" id="m-title">Título</h3>
+        <div class="modal-price" id="m-price">S/ 0</div>
+        <p class="modal-desc" id="m-desc">Descripción breve del producto.</p>
+        <div class="modal-actions">
+          <button class="btn gold">Añadir al carrito</button>
+          <button class="btn" onclick="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ====== CARRUSEL SIMPLE ====== */
+    const track = document.getElementById('track');
+    const slides = Array.from(track.children);
+    let index = 0;
+
+    function updateDots(){
+      const dots = document.getElementById('dots');
+      dots.innerHTML = '';
+      slides.forEach((_, i) => {
+        const d = document.createElement('span');
+        d.className = 'dot' + (i === index ? ' active' : '');
+        dots.appendChild(d);
+      });
+    }
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      updateDots();
+    }
+    function moveSlide(step){ goTo(index + step); }
+    updateDots();
+    // Auto-play (opcional)
+    let autoplay = setInterval(()=>moveSlide(1), 6000);
+    document.querySelector('.carousel').addEventListener('mouseenter',()=>clearInterval(autoplay));
+    document.querySelector('.carousel').addEventListener('mouseleave',()=>autoplay = setInterval(()=>moveSlide(1), 6000));
+
+    /* ====== MODAL: VISTA RÁPIDA ====== */
+    const modal = document.getElementById('modal');
+    const mImg = document.getElementById('m-img');
+    const mTitle = document.getElementById('m-title');
+    const mPrice = document.getElementById('m-price');
+    const mDesc = document.getElementById('m-desc');
+
+    function openModal({img, title, price, desc, alt}){
+      mImg.src = img;
+      mImg.alt = alt || title || 'Producto';
+      mTitle.textContent = title || '';
+      mPrice.textContent = price || '';
+      mDesc.textContent = desc || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      // Limpieza para evitar que imagenes enormes permanezcan en memoria en móviles
+      setTimeout(()=>{ mImg.src=''; }, 300);
+    }
+    modal.addEventListener('click',(e)=>{ if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown',(e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    // Delegación de eventos: todas las .product abren modal
+    document.addEventListener('click',(e)=>{
+      const card = e.target.closest('.product');
+      if(!card) return;
+      openModal({
+        img: card.dataset.img,
+        title: card.dataset.name,
+        price: card.dataset.price,
+        desc: card.dataset.desc,
+        alt: card.querySelector('img')?.alt
+      });
+    });
+  </script>
+</body>
+</html>
